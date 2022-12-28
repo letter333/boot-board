@@ -1,8 +1,35 @@
 package com.kb.ODA_Board.controller;
 
+import com.kb.ODA_Board.repository.dto.MemberDTO;
+import com.kb.ODA_Board.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
+@RequiredArgsConstructor
 public class MemberController {
+
+    private final MemberService service;
+
+    @PostMapping("/getId")
+    public String getId(MemberDTO dto) {
+        boolean b = service.getId(dto);
+        if (b) {
+            return "no";
+        }
+
+        return "ok";
+
+    }
+
+    @GetMapping("/getId")
+    public String test(MemberDTO dto) {
+
+        return "member/register";
+
+    }
 
 }

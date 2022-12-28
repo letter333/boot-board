@@ -4,11 +4,13 @@ import com.kb.ODA_Board.repository.dto.MemberDTO;
 import com.kb.ODA_Board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -26,9 +28,9 @@ public class MemberController {
     }
 
     @GetMapping("/getId")
-    public String test(MemberDTO dto) {
-
-        return "member/register";
+    public ModelAndView test(MemberDTO dto) {
+        ModelAndView mav = new ModelAndView("member/register");
+        return mav;
 
     }
 

@@ -1,4 +1,4 @@
 package com.kb.ODA_Board.service;
 
-public interface MemberService {
+public interface BoardService {
 }

@@ -1,37 +1,31 @@
 package com.kb.ODA_Board.controller;
 
-import com.kb.ODA_Board.repository.dto.MemberDTO;
-import com.kb.ODA_Board.service.MemberService;
-import lombok.RequiredArgsConstructor;
+import com.kb.ODA_Board.service.MemberServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequiredArgsConstructor
+@Controller
+@RequestMapping("/member")
 public class MemberController {
+    private final MemberServiceImpl service;
 
-    private final MemberService service;
-
-    @PostMapping("/getId")
-    public String getId(MemberDTO dto) {
-        boolean b = service.getId(dto);
-        if (b) {
-            return "no";
-        }
-
-        return "ok";
-
+    // 생성자 주입을 사용해 의존성 주입
+    public MemberController(MemberServiceImpl service) {
+        this.service = service;
     }
 
-    @GetMapping("/getId")
-    public ModelAndView test(MemberDTO dto) {
-        ModelAndView mav = new ModelAndView("member/register");
-        return mav;
-
+    @GetMapping("/create")
+    public String createMemberForm() {
+        return "/member/registerForm";
     }
 
+    @PostMapping("/create")
+    public String createMemberPro() {
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String memberLoginForm() {
+        return "/member/loginForm";
+    }
 }

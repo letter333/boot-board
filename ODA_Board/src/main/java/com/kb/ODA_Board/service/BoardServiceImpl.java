@@ -4,10 +4,13 @@ import com.kb.ODA_Board.mapper.BoardMapper;
 import com.kb.ODA_Board.model.BoardDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final BoardMapper boardMapper;
@@ -19,5 +22,15 @@ public class BoardServiceImpl implements BoardService {
 
         boardDTO.setAuthor(userId);
         boardMapper.boardWrite(boardDTO);
+    }
+
+    @Override
+    public BoardDTO boardView(Integer bno) {
+        return boardMapper.boardView(bno);
+    }
+
+    @Override
+    public List<BoardDTO> boardList() {
+        return boardMapper.boardList();
     }
 }

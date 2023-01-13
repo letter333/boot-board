@@ -15,7 +15,6 @@ public class MemberController {
     private final MemberServiceImpl service;
     private final PasswordEncoder passwordEncoder;
 
-
     @GetMapping("/create")
     public String createMemberForm() {
         return "/member/registerForm";

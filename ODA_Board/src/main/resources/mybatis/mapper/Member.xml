@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kb.ODA_Board.mapper.MemberMapper">
     <insert id="createMember" parameterType="com.kb.ODA_Board.model.MemberDTO">
-        insert into member_info (id, pw, name, email, role) values (#{id}, #{pw}, #{name}, #{email}, #{role});
+        insert into member_info (id, pw, name, email) values (#{id}, #{pw}, #{name}, #{email});
     </insert>
 
     <select id="loginMember" parameterType="String" resultType="com.kb.ODA_Board.model.MemberDTO">

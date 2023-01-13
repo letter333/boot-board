@@ -7,4 +7,12 @@
     <insert id="boardWrite" parameterType="com.kb.ODA_Board.model.BoardDTO" useGeneratedKeys="true" keyProperty="bno">
         insert into board (author, title, content) values (#{author}, #{title}, #{content});
     </insert>
+
+    <select id="boardList" resultType="com.kb.ODA_Board.model.BoardDTO">
+        select * from board;
+    </select>
+
+    <select id="boardView" parameterType="Integer" resultType="com.kb.ODA_Board.model.BoardDTO">
+        select * from board where bno = #{bno};
+    </select>
 </mapper>

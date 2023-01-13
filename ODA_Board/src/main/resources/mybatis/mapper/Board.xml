@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.ODA_Board.mapper.BoardMapper">
+    <insert id="boardWrite" parameterType="com.kb.ODA_Board.model.BoardDTO" useGeneratedKeys="true" keyProperty="bno">
+        insert into board (author, title, content) values (#{author}, #{title}, #{content});
+    </insert>
+</mapper>

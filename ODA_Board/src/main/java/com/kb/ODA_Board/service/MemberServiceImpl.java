@@ -3,6 +3,7 @@ package com.kb.ODA_Board.service;
 import com.kb.ODA_Board.model.MemberDTO;
 import com.kb.ODA_Board.mapper.MemberMapper;
 import com.kb.ODA_Board.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,13 +15,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService, UserDetailsService {
     private final MemberMapper memberMapper;
-
-
-    public MemberServiceImpl(MemberMapper memberMapper) {
-        this.memberMapper = memberMapper;
-    }
 
     @Override
     public int createMember(MemberDTO dto) {

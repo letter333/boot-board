@@ -3,7 +3,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kb.ODA_Board.repository.mapper.MemberMapper">
+<mapper namespace="com.kb.ODA_Board.mapper.MemberMapper">
+    <insert id="createMember" parameterType="com.kb.ODA_Board.model.MemberDTO">
+        insert into member_info (id, pw, name, email, role) values (#{id}, #{pw}, #{name}, #{email}, #{role});
+    </insert>
 
-
+    <select id="loginMember" parameterType="String" resultType="com.kb.ODA_Board.model.MemberDTO">
+        select * from member_info where id = #{id};
+    </select>
 </mapper>

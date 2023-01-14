@@ -8,8 +8,8 @@
         insert into board (author, title, content) values (#{author}, #{title}, #{content});
     </insert>
 
-    <select id="boardList" resultType="com.kb.ODA_Board.model.BoardDTO">
-        select * from board;
+    <select id="boardList" parameterType="com.kb.ODA_Board.model.PageDTO" resultType="com.kb.ODA_Board.model.BoardDTO">
+        select * from board order by bno desc limit #{amount} offset #{offset};
     </select>
 
     <select id="boardView" parameterType="Integer" resultType="com.kb.ODA_Board.model.BoardDTO">
@@ -23,4 +23,8 @@
     <delete id="boardDelete" parameterType="int">
         delete from board where bno = #{bno};
     </delete>
+
+    <select id="getCount" resultType="Integer">
+        select count(*) from board;
+    </select>
 </mapper>

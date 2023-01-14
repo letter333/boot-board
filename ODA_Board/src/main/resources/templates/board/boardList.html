@@ -31,6 +31,32 @@
         </tr>
         </tbody>
     </table>
+    <div id="pagination">
+        <!-- 맨 처음 페이지로 이동하는 버튼 -->
+        <span th:if="${pageDTO.startPage > 1}">
+        <a th:href="@{'/board/list?page=1'}" th:text="'처음&emsp;'"></a>
+    </span>
+
+        <!-- 이전 블록으로 이동하는 버튼 -->
+        <span th:if="${pageDTO.isPrev == true}">
+    	<a th:href="@{'/board/list?page='+${pageDTO.startPage - 1}}" th:text="'이전'"></a>
+    </span>
+
+        <!-- 시퀀스 보여주는 값을 변경. -->
+        <span th:each="pageNum : ${#numbers.sequence(pageDTO.startPage, pageDTO.endPage)}">
+        <a class="div2" th:href="@{'/board/list?page='+${pageNum}}" th:text="|&emsp;${pageNum}&emsp;|"></a>
+    </span>
+
+        <!-- 다음 블록으로 이동하는 버튼 -->
+        <span th:if="${pageDTO.isNext == true}">
+	<a th:href="@{'/board/list?page='+|${pageDTO.endPage + 1}|}" th:text="'다음'"></a>
+    </span>
+
+        <!-- 맨 뒷 페이지로 이동하는 버튼 -->
+        <span th:if="${pageDTO.endPage < pageDTO.totalPageCount}">
+	<a th:href="@{'/board/list?page='+${pageDTO.totalPageCount}}" th:text="|&emsp;끝|"></a>
+    </span>
+    </div>
 </div>
 </body>
 </html>

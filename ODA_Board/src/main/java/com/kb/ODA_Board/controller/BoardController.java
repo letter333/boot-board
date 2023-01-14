@@ -1,6 +1,7 @@
 package com.kb.ODA_Board.controller;
 
 import com.kb.ODA_Board.model.BoardDTO;
+import com.kb.ODA_Board.model.PageDTO;
 import com.kb.ODA_Board.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -33,8 +35,11 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model) {
-        model.addAttribute("list", boardService.boardList());
+    public String boardList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        PageDTO pageDTO = new PageDTO(boardService.getCount(), page);
+
+        model.addAttribute("list", boardService.boardList(pageDTO));
+        model.addAttribute("pageDTO", pageDTO);
 
         return "/board/boardList";
     }

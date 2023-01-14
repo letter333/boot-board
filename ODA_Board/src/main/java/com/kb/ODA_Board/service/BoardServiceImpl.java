@@ -2,6 +2,7 @@ package com.kb.ODA_Board.service;
 
 import com.kb.ODA_Board.mapper.BoardMapper;
 import com.kb.ODA_Board.model.BoardDTO;
+import com.kb.ODA_Board.model.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> boardList() {
-        return boardMapper.boardList();
+    public List<BoardDTO> boardList(PageDTO pageDTO) {
+        return boardMapper.boardList(pageDTO);
     }
 
     @Override
@@ -42,5 +43,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void boardDelete(int bno) {
         boardMapper.boardDelete(bno);
+    }
+
+    @Override
+    public int getCount() {
+        return boardMapper.getCount();
     }
 }

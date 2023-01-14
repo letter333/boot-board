@@ -7,5 +7,10 @@
 <body>
 <h1 th:text="${board.title}">제목</h1>
 <p th:text="${board.content}">내용</p>
+<a th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
+<form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">삭제하기</button>
+</form>
 </body>
 </html>

@@ -28,12 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-            .logoutSuccessUrl("/");
+            .logoutSuccessUrl("/")
+            .clearAuthentication(true)
+            .invalidateHttpSession(true);
 
         http.authorizeRequests()
                 .antMatchers("/member/create", "/member/login", "/board/view/**", "/board/list").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/member/**", "/board/**").hasRole("USER");
+                .antMatchers("/member/**", "/board/**").hasRole("USER")
+                .antMatchers("/**").permitAll();
     }
 
     @Override

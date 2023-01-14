@@ -15,4 +15,12 @@
     <select id="boardView" parameterType="Integer" resultType="com.kb.ODA_Board.model.BoardDTO">
         select * from board where bno = #{bno};
     </select>
+
+    <update id="boardModify" parameterType="com.kb.ODA_Board.model.BoardDTO">
+        update board set title = #{title}, content = #{content} where bno = #{bno};
+    </update>
+
+    <delete id="boardDelete" parameterType="int">
+        delete from board where bno = #{bno};
+    </delete>
 </mapper>

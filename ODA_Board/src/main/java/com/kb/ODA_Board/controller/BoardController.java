@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -45,5 +44,29 @@ public class BoardController {
         model.addAttribute("board", boardService.boardView(bno));
 
         return "/board/boardView";
+    }
+
+    @GetMapping("/board/modify/{bno}")
+    public String boardModify(@PathVariable("bno") int bno, Model model) {
+        model.addAttribute("board", boardService.boardView(bno));
+
+        return "/board/boardModify";
+    }
+
+    @PutMapping("/board/modifyProc/{bno}")
+    public String boardModifyPro(@PathVariable("bno") int bno, BoardDTO boardDTO, Model model) {
+        boardDTO.setBno(bno);
+        boardService.boardModify(boardDTO);
+
+        model.addAttribute("board", boardService.boardView(bno));
+
+        return "redirect:/board/view?bno=" + bno;
+    }
+
+    @DeleteMapping("/board/delete/{bno}")
+    public String boardDeletePro(@PathVariable("bno") int bno) {
+        boardService.boardDelete(bno);
+
+        return "redirect:/board/list";
     }
 }

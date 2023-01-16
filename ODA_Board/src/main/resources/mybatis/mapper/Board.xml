@@ -20,11 +20,19 @@
         update board set title = #{title}, content = #{content} where bno = #{bno};
     </update>
 
-    <delete id="boardDelete" parameterType="int">
+    <delete id="boardDelete" parameterType="Integer">
         delete from board where bno = #{bno};
     </delete>
 
     <select id="getCount" resultType="Integer">
         select count(*) from board;
+    </select>
+
+    <insert id="commentWrite" parameterType="Map" useGeneratedKeys="true" keyProperty="cno">
+        insert into comment (comment, member_id, comment_bno) values (#{comment}, #{member_id}, #{comment_bno});
+    </insert>
+
+    <select id="commentList" parameterType="Integer" resultType="com.kb.ODA_Board.model.CommentDTO">
+        select * from comment where comment_bno = #{bno};
     </select>
 </mapper>

@@ -1,10 +1,12 @@
 package com.kb.ODA_Board.controller;
 
 import com.kb.ODA_Board.model.BoardDTO;
+import com.kb.ODA_Board.model.CommentDTO;
 import com.kb.ODA_Board.model.PageDTO;
 import com.kb.ODA_Board.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,7 @@ public class BoardController {
     @GetMapping("/board/view")
     public String boardView(Model model, Integer bno) {
         model.addAttribute("board", boardService.boardView(bno));
+        model.addAttribute("commentList", boardService.commentList(bno));
 
         return "/board/boardView";
     }
@@ -73,5 +76,15 @@ public class BoardController {
         boardService.boardDelete(bno);
 
         return "redirect:/board/list";
+    }
+
+    @PostMapping("/board/comment/write/{bno}")
+    public String commentWrite(@PathVariable("bno") int bno, CommentDTO commentDTO) {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        commentDTO.setComment_bno(bno);
+        commentDTO.setMember_id(memberId);
+        boardService.commentWrite(commentDTO);
+
+        return "redirect:/board/view?bno=" + bno;
     }
 }

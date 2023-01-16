@@ -1,6 +1,7 @@
 package com.kb.ODA_Board.service;
 
 import com.kb.ODA_Board.model.BoardDTO;
+import com.kb.ODA_Board.model.CommentDTO;
 import com.kb.ODA_Board.model.PageDTO;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface BoardService {
     void boardModify(BoardDTO boardDTO);
     void boardDelete(int bno);
     int getCount();
+    void commentWrite(CommentDTO commentDTO);
+    List<CommentDTO> commentList(int bno);
 }

@@ -2,6 +2,7 @@ package com.kb.ODA_Board.service;
 
 import com.kb.ODA_Board.mapper.BoardMapper;
 import com.kb.ODA_Board.model.BoardDTO;
+import com.kb.ODA_Board.model.CommentDTO;
 import com.kb.ODA_Board.model.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -25,11 +27,13 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.boardWrite(boardDTO);
     }
 
+    // bno에 해당하는 게시글 보기
     @Override
     public BoardDTO boardView(Integer bno) {
         return boardMapper.boardView(bno);
     }
 
+    // 페이지 번호에 해당하는 게시글 리스트
     @Override
     public List<BoardDTO> boardList(PageDTO pageDTO) {
         return boardMapper.boardList(pageDTO);
@@ -48,5 +52,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int getCount() {
         return boardMapper.getCount();
+    }
+
+    @Override
+    public void commentWrite(CommentDTO commentDTO) {
+        boardMapper.commentWrite(commentDTO);
+    }
+
+    @Override
+    public List<CommentDTO> commentList(int bno) {
+        return boardMapper.commentList(bno);
     }
 }

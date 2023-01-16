@@ -12,5 +12,15 @@
     <input type="hidden" name="_method" value="delete">
     <button type="submit">삭제하기</button>
 </form>
+<form th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
+    댓글<input type="text" name="comment">
+    <button type="submit">댓글달기</button>
+</form>
+<div th:each="comment : ${commentList}">
+    <div>
+        <span th:text="${comment.member_id}">댓글작성자</span> : 
+        <span th:text="${comment.comment}">댓글내용</span>
+    </div>
+</div>
 </body>
 </html>

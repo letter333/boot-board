@@ -18,8 +18,12 @@
 </form>
 <div th:each="comment : ${commentList}">
     <div>
-        <span th:text="${comment.member_id}">댓글작성자</span> : 
+        <span th:text="${comment.member_id}">댓글작성자</span> :
         <span th:text="${comment.comment}">댓글내용</span>
+        <form th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">댓글삭제</button>
+        </form>
     </div>
 </div>
 </body>

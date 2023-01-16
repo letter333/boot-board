@@ -87,4 +87,11 @@ public class BoardController {
 
         return "redirect:/board/view?bno=" + bno;
     }
+
+    @DeleteMapping("/board/comment/delete/{cno}")
+    public String commentDelete(@PathVariable("cno") int cno, int bno) {
+        boardService.commentDelete(cno);
+
+        return "redirect:/board/view?bno=" + bno;
+    }
 }

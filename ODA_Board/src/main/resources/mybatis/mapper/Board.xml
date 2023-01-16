@@ -35,4 +35,8 @@
     <select id="commentList" parameterType="Integer" resultType="com.kb.ODA_Board.model.CommentDTO">
         select * from comment where comment_bno = #{bno};
     </select>
+
+    <delete id="commentDelete" parameterType="Integer">
+        delete from comment where cno = #{cno};
+    </delete>
 </mapper>

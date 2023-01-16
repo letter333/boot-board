@@ -16,4 +16,5 @@ public interface BoardService {
     int getCount();
     void commentWrite(CommentDTO commentDTO);
     List<CommentDTO> commentList(int bno);
+    void commentDelete(int cno);
 }

@@ -63,4 +63,9 @@ public class BoardServiceImpl implements BoardService {
     public List<CommentDTO> commentList(int bno) {
         return boardMapper.commentList(bno);
     }
+
+    @Override
+    public void commentDelete(int cno) {
+        boardMapper.commentDelete(cno);
+    }
 }

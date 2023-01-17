@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PageDTO {
-    private int amount  = 10;     // 한 페이지 당 보여줄 게시물 개수
+    private int amount  = 20;     // 한 페이지 당 보여줄 게시물 개수
     private int pageCount = 5;     // 한 블럭에 몇 개의 페이지 개수
     private int totalCount;        // 총 게시물 개수
     private int page;              // 현재 페이지

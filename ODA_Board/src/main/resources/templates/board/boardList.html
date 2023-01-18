@@ -26,7 +26,13 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-outline-dark" th:href="@{/board/write}">글작성</a>
+    <div class="d-flex flex-row-reverse">
+        <a class="btn btn-outline-dark" th:href="@{/board/write}">글작성</a>
+    </div>
+    <form class="d-flex mb-3 justify-content-center" role="search">
+        <input class="form-control m-2" style="width: 40%; padding: 0 10px; line-height: 2rem;" type="search" placeholder="검색할 단어를 입력해주세요." aria-label="Search">
+        <button class="fa-solid fa-magnifying-glass fa-lg" style="border: none; outline: none; background-color: inherit;" type="submit"></button>
+    </form>
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:if="${pageDTO.startPage > 1}">

@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${board.title}"></title>
 </head>
-<body>
-<div layout:fragment="content">
-<h1 th:text="${board.title}">제목</h1>
+<body layout:fragment="content">
+<div class="container" id="content-wrapper">
+<p class="fs-1 fw-bold" th:text="${board.title}">제목</p>
+<p class="fs-5" th:text="${board.author}">작성자</p><hr>
 <p th:text="${board.content}">내용</p>
-<a th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
-<form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
-    <input type="hidden" name="_method" value="delete">
-    <button type="submit">삭제하기</button>
+<div class="d-flex flex-row-reverse">
+    <a class="btn btn-outline-dark btn-sm" th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
+    <form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-outline-dark btn-sm" type="submit">삭제하기</button>
+    </form>
+</div>
+<hr>
+<form class="form-floating row d-flex flex-row-reverse" sec:authorize="isAuthenticated()" th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
+    <textarea id="floatingTextarea" class="form-control comment col-8" name="comment"></textarea>
+    <label for="floatingTextarea">댓글을 작성하세요</label>
+    <button class="btn btn-dark btn-sm btn-sm col-2 mt-3" type="submit">댓글달기</button>
 </form>
-<form th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
-    댓글<input type="text" name="comment">
-    <button type="submit">댓글달기</button>
+<form class="form-floating row d-flex flex-row-reverse" sec:authorize="isAnonymous()" th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
+    <textarea id="floatingTextarea" class="form-control comment col-8" name="comment" disabled></textarea>
+    <label for="floatingTextarea">로그인 후 댓글작성이 가능합니다.</label>
+    <button class="btn btn-dark btn-sm col-2 mt-3" disabled type="submit">댓글달기</button>
 </form>
 <div th:each="comment : ${commentList}">
-    <div>
-        <span th:text="${comment.member_id}">댓글작성자</span> :
-        <span th:text="${comment.comment}">댓글내용</span>
-        <form th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
+
+        <p class="fw-bold" th:text="${comment.member_id}">댓글작성자</p>
+    <div class="row">
+        <p class="col-10 mb-0 d-flex align-items-center" th:text="${comment.comment}">댓글내용</p>
+        <form class="col-2 d-flex align-items-center" th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit">댓글삭제</button>
+            <button class="fa-solid fa-trash fs-xs" style="border: none; outline: none; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;" type="submit"></button>
         </form>
     </div>
+    <hr>
 </div>
 </div>
 </body>

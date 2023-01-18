@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org"
+<html lang="ko" xmlns:th="www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
+    <title>게시글 리스트</title>
 </head>
-<style>
-</style>
 <body>
 <div class="container mt-5" layout:fragment="content">
     <table class="table table-striped">
@@ -22,7 +20,7 @@
         <tr th:each="board : ${list}">
             <th scope="row" th:text="${board.bno}">1</th>
             <td>
-                <a th:text="${board.title}" th:href="@{/board/view(bno=${board.bno})}"></a>
+                <a class="text-dark title" th:text="${board.title}" th:href="@{/board/view(bno=${board.bno})}"></a>
             </td>
             <td th:text="${board.author}">작성자</td>
         </tr>

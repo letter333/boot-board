@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org"
+<html lang="ko" xmlns:th="www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>로그인</title>
 </head>
 <body class="text-center" layout:fragment="content">
 <form id="container" th:action="@{/member/loginProc}" method="post">
     <div id="loginBox">
-        <div id="loginBoxTitle">Login</div>
+        <div id="loginBoxTitle">로그인</div>
         <div id="inputBox">
-            <div class="input-form-box"><span>아이디</span><input type="text" name="id" class="form-control ms-1"></div>
-            <div class="input-form-box"><span>비밀번호</span><input type="password" name="password" class="form-control ms-1"></div>
+            <div class="input-form-box"><input type="text" name="id" class="form-control ms-1" placeholder="아이디"></div>
+            <div class="input-form-box"><input type="password" name="pw" class="form-control ms-1" placeholder="비밀번호"></div>
             <div class="button-login-box" >
                 <button type="submit" class="btn btn-primary btn-xs" style="width:100%">로그인</button>
             </div>

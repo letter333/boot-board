@@ -24,11 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("pw")
                 .loginProcessingUrl("/member/loginProc") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
                 .failureUrl("/member/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/board/list")
                 .and()
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-            .logoutSuccessUrl("/")
+            .logoutSuccessUrl("/board/list")
             .clearAuthentication(true)
             .invalidateHttpSession(true);
 

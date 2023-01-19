@@ -19,7 +19,14 @@ public class PageDTO {
 
     private int offset;            // 얼만큼 끊어서 가져올 것인가.
 
-    public PageDTO(final int totalCount, final int page) {
+    private String searchType; // 검색 타입 (전체, 작성자, 제목, 내용 등)
+
+    private String keyword; // 검색어
+
+    public PageDTO(final int totalCount, final int page, String searchType, String keyword) {
+        this.searchType = searchType;
+
+        this. keyword = keyword;
 
         // 총 페이지 개수 구하기
         setTotalPageCount(totalCount, this.amount);

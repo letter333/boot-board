@@ -9,7 +9,25 @@
     </insert>
 
     <select id="boardList" parameterType="com.kb.ODA_Board.model.PageDTO" resultType="com.kb.ODA_Board.model.BoardDTO">
-        select * from board order by bno desc limit #{amount} offset #{offset};
+        select * from board
+        <choose>
+            <when test="searchType == 'all' and keyword != null">
+                where
+                (author like concat('%', #{keyword}, '%')
+                or (title like concat('%', #{keyword}, '%')
+                or (content like concat('%', #{keyword}, '%'))))
+            </when>
+            <when test="searchType == 'author' and keyword != null">
+                where author like concat('%', #{keyword}, '%')
+            </when>
+            <when test="searchType == 'title' and keyword != null">
+                where title like concat('%', #{keyword}, '%')
+            </when>
+            <when test="searchType == 'content' and keyword != null">
+                where content like concat('%', #{keyword}, '%')
+            </when>
+        </choose>
+                 order by bno desc limit #{amount} offset #{offset};
     </select>
 
     <select id="boardView" parameterType="Integer" resultType="com.kb.ODA_Board.model.BoardDTO">
@@ -24,11 +42,28 @@
         delete from board where bno = #{bno};
     </delete>
 
-    <select id="getCount" resultType="Integer">
-        select count(*) from board;
+    <select id="getCount" parameterType="String" resultType="Integer">
+        select count(*) from board
+        <choose>
+            <when test="searchType == 'all' and keyword != null">
+                where
+                    (author like concat('%', #{keyword}, '%')
+                or (title like concat('%', #{keyword}, '%')
+                or (content like concat('%', #{keyword}, '%'))));
+            </when>
+            <when test="searchType == 'author' and keyword != null">
+                where author like concat('%', #{keyword}, '%');
+            </when>
+            <when test="searchType == 'title' and keyword != null">
+                where title like concat('%', #{keyword}, '%');
+            </when>
+            <when test="searchType == 'content' and keyword != null">
+                where content like concat('%', #{keyword}, '%');
+            </when>
+        </choose>
     </select>
 
-    <insert id="commentWrite" parameterType="Map" useGeneratedKeys="true" keyProperty="cno">
+    <insert id="commentWrite" parameterType="com.kb.ODA_Board.model.CommentDTO" useGeneratedKeys="true" keyProperty="cno">
         insert into comment (comment, member_id, comment_bno) values (#{comment}, #{member_id}, #{comment_bno});
     </insert>
 

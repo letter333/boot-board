@@ -17,7 +17,7 @@ public interface BoardMapper {
     List<BoardDTO> boardList(PageDTO pageDTO);
     void boardModify(BoardDTO boardDTO);
     void boardDelete(int bno);
-    int getCount();
+    int getCount(String searchType, String keyword);
     void commentWrite(CommentDTO commentDTO);
     List<CommentDTO> commentList(int bno);
     void commentDelete(int cno);

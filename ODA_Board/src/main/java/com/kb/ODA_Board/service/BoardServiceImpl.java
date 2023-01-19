@@ -50,8 +50,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int getCount() {
-        return boardMapper.getCount();
+    public int getCount(String searchType, String keyword) {
+        return boardMapper.getCount(searchType, keyword);
     }
 
     @Override

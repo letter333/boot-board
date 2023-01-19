@@ -37,10 +37,15 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-        PageDTO pageDTO = new PageDTO(boardService.getCount(), page);
+    public String boardList(Model model,
+                            @RequestParam(value = "page", defaultValue = "1") int page,
+                            @RequestParam(required = false, value = "searchType") String searchType,
+                            @RequestParam(required = false, value = "keyword") String keyword) {
+        PageDTO pageDTO = new PageDTO(boardService.getCount(searchType, keyword), page, searchType, keyword);
 
         model.addAttribute("list", boardService.boardList(pageDTO));
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("pageDTO", pageDTO);
 
         return "/board/boardList";

@@ -26,7 +26,7 @@ public class BoardController {
 
     @GetMapping("/board/write")
     public String writeForm() {
-        return "/board/writeForm";
+        return "/board/boardWrite";
     }
 
     @PostMapping("/board/writeProc")

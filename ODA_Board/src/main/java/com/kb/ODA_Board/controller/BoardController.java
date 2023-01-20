@@ -10,7 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +34,12 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
+    @ResponseBody
     @PostMapping("/board/writeProc")
     public String writeFormPro(BoardDTO boardDTO) {
         boardService.boardWrite(boardDTO);
 
-        return "redirect:/";
+        return "/board/list";
     }
 
     @GetMapping("/board/list")
@@ -102,4 +108,5 @@ public class BoardController {
 
         return "redirect:/board/view?bno=" + bno;
     }
+
 }

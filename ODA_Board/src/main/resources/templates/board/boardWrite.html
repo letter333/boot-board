@@ -7,12 +7,13 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>글작성 페이지</h1>
-    <form th:action="@{/board/writeProc}" method="post">
-        제목 : <input type="text" name="title"> <br>
-        내용 : <textarea name="content" id="" cols="30" rows="10"></textarea> <br>
-        <button type="submit">작성</button>
-    </form>
+    <div class="container mt-5 mb-5" id="editor-container">
+        <input class="form-control form-control-lg mb-2" type="text" name="title" id="title" placeholder="제목을 입력해주세요."> <br>
+        <div name="content" id="editor" placeholder="내용을 입력해주세요."></div> <br>
+        <div class="d-flex flex-row-reverse">
+            <button class="btn btn-outline-dark" id="submitBtn" type="button">작성</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

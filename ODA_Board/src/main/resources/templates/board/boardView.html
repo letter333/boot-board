@@ -10,7 +10,7 @@
 <div class="container" id="content-wrapper">
 <p class="fs-1 fw-bold" th:text="${board.title}">제목</p>
 <p class="fs-5" th:text="${board.author}">작성자</p><hr>
-<p th:text="${board.content}">내용</p>
+<div id="content" th:text="${board.content}">내용</div>
 <div class="d-flex flex-row-reverse" th:if="${board.author} == ${memberId}">
     <a class="btn btn-outline-dark btn-sm ms-2" th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
     <form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
@@ -42,5 +42,17 @@
     <hr>
 </div>
 </div>
+<!--<script th:inline="javascript">
+    /*[!CDATA[*/
+    let tmpContent = /*[[${board.content}]]*/
+        tmpContent = tmpContent.replaceAll("&lt;", "<")
+    tmpContent = tmpContent.replaceAll("&gt;", ">")
+    tmpContent = tmpContent.replaceAll("&amp;lt;", "<")
+    tmpContent = tmpContent.replaceAll("&amp;gt", ">")
+    tmpContent = tmpContent.replaceAll("&amp;nbsp;", " ")
+    tmpContent = tmpContent.replaceAll("&amp;amp;", "&")
+    document.querySelector('#content').innerHTML = tmpContent
+    /*]]*/
+</script>-->
 </body>
 </html>

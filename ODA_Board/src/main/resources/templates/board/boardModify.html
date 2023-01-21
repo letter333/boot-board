@@ -7,13 +7,13 @@
 </head>
 <body>
     <h1>글수정 페이지</h1>
-    <div layout:fragment="content">
-    <form th:action="@{/board/modifyProc/{bno}(bno=${board.bno})}" method="post">
-        <input type="hidden" name="_method" value="put"/>
-        제목 : <input type="text" name="title" th:value="${board.title}"> <br>
-        내용 : <textarea name="content" id="" cols="30" rows="10" th:text="${board.content}"></textarea> <br>
-        <button type="submit">수정</button>
-    </form>
+    <div class="container mt-5 mb-5" id="editor-container" layout:fragment="content">
+        <div hidden id="bno" th:data-bno="${board.bno}"></div>
+        <input class="form-control form-control-lg mb-2" type="text" name="title" id="modifyTitle" th:value="${board.title}" placeholder="제목을 입력해주세요."> <br>
+        <div name="content" id="modify-editor" th:data-content="${board.content}"></div> <br>
+        <div class="d-flex flex-row-reverse">
+            <button class="btn btn-outline-dark" id="modifyBtn" type="button">수정</button>
+        </div>
     </div>
 </body>
 </html>

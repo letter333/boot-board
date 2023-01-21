@@ -75,6 +75,7 @@ public class BoardController {
         return "/board/boardModify";
     }
 
+    @ResponseBody
     @PutMapping("/board/modifyProc/{bno}")
     public String boardModifyPro(@PathVariable("bno") int bno, BoardDTO boardDTO, Model model) {
         boardDTO.setBno(bno);
@@ -82,7 +83,7 @@ public class BoardController {
 
         model.addAttribute("board", boardService.boardView(bno));
 
-        return "redirect:/board/view?bno=" + bno;
+        return "/board/view?bno=" + bno;
     }
 
     @DeleteMapping("/board/delete/{bno}")

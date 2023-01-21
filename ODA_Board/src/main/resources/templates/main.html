@@ -82,7 +82,7 @@
         });
     });
 </script>
-<script th:inline="javascript">
+<script>
     const Viewer = toastui.Editor;
 
     const viewer = new Viewer.factory({
@@ -92,5 +92,40 @@
 
     const viewerData = $('#viewer').data('content');
     viewer.setMarkdown(viewerData)
+</script>
+<script th:inline="javascript">
+    const Modify = toastui.Editor;
+
+    const modify = new Modify({
+        el: document.querySelector('#modify-editor'),
+        height: '700px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical'
+    })
+
+    const modifyData = $('#modify-editor').data('content')
+
+    modify.setHTML(modifyData)
+
+    const bno = $('#bno').data('bno')
+
+    // 게시글 수정 ajax
+    $('#modifyBtn').on("click", function() {
+        $.ajax({
+            type: "put",
+            url: "/board/modifyProc/" + bno,
+            data: {
+                title: $('#modifyTitle').val(),
+                content: modify.getHTML(),
+            },
+            success: function(data) {
+                console.log(data)
+                location.replace(data)
+            },
+            error: function(e) {
+                console.log(e)
+            }
+        });
+    });
 </script>
 </html>

@@ -6,7 +6,6 @@
     <title>글수정</title>
 </head>
 <body>
-    <h1>글수정 페이지</h1>
     <div class="container mt-5 mb-5" id="editor-container" layout:fragment="content">
         <div hidden id="bno" th:data-bno="${board.bno}"></div>
         <input class="form-control form-control-lg mb-2" type="text" name="title" id="modifyTitle" th:value="${board.title}" placeholder="제목을 입력해주세요."> <br>

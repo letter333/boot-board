@@ -1,0 +1,29 @@
+.title {
+    text-decoration: none;
+}
+
+.title:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#content-wrapper {
+    width: 840px;
+    margin-top: 8rem;
+}
+
+.comment {
+    resize: none;
+}
+
+#editor-container {
+    width: 840px;
+}
+
+#title {
+    width: 816px;
+}
+
+.ck-editor__editable[role="textbox"] {
+    min-height: 700px;
+}

@@ -3,23 +3,25 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>회원가입</title>
 </head>
-<body class="text-center" layout:fragment="content">
-<form id="container" th:action="@{/member/create}" method="post">
+<body class="text-center" layout:fragment="content">c
+<div id="container">
+<form id="registerForm" th:action="@{/member/create}" method="post">
   <div id="loginBox">
     <div id="loginBoxTitle">회원가입</div>
     <div id="inputBox">
-      <div class="input-form-box"><input type="text" name="id" class="form-control ms-1" placeholder="아이디"></div>
-      <div class="input-form-box"><input type="password" name="pw" class="form-control ms-1" placeholder="비밀번호"></div>
-      <div class="input-form-box"><input type="text" name="name" class="form-control ms-1" placeholder="이름"></div>
-      <div class="input-form-box"><input type="text" name="email" class="form-control ms-1" placeholder="이메일"></div>
+      <div class="input-form-box"><input id="register-id" type="text" name="id" class="form-control ms-1" placeholder="*아이디"></div>
+      <div class="input-form-box"><input id="register-pw" type="password" name="pw" class="form-control ms-1" placeholder="*비밀번호"></div>
+      <div class="input-form-box"><input id="register-pw-check" type="password" name="pw-check" class="form-control ms-1" placeholder="*비밀번호 확인"></div>
+      <div class="input-form-box"><input id="register-name" type="text" name="name" class="form-control ms-1" placeholder="*이름"></div>
+      <div class="input-form-box"><input id="register-email" type="text" name="email" class="form-control ms-1" placeholder="*이메일"></div>
       <div class="button-login-box">
-        <button type="submit" class="btn btn-dark btn-xs" style="width:100%">회원가입</button>
+        <button id="register-btn" type="button" class="btn btn-dark btn-xs" style="width:100%">회원가입</button>
       </div>
     </div>
   </div>
 </form>
-
+</div>
 </body>
 </html>

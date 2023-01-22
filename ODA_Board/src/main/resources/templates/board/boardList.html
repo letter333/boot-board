@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +28,8 @@
         </tbody>
     </table>
     <div class="d-flex flex-row-reverse">
-        <a class="btn btn-outline-dark" th:href="@{/board/write}">글작성</a>
+        <button sec:authorize="isAnonymous()" class="btn btn-outline-dark" onclick="loginCheck()">글작성</button>
+        <a sec:authorize="isAuthenticated()" class="btn btn-outline-dark" th:href="@{/board/write}">글작성</a>
     </div>
     <form class="d-flex mb-3 justify-content-center" role="search">
         <select class="form-select form-select-sm m-2" style="width: 7%;" name="searchType" aria-label=".form-select">

@@ -22,6 +22,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script></body>
   <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
+    // 게시글 작성 js
     const Editor = toastui.Editor;
 
     const editor = new Editor({
@@ -51,7 +52,7 @@
                         content: editor.getHTML(),
                     },
                     success: function (data) {
-                        location.replace(data)
+                        location.href = data
                     },
                     error: function (e) {
                         console.log(e)
@@ -60,6 +61,7 @@
             }});
 </script>
 <script>
+    // 게시글 상세보기 js
     const Viewer = toastui.Editor;
 
     const viewer = new Viewer.factory({
@@ -70,7 +72,8 @@
     const viewerData = $('#viewer').data('content');
     viewer.setMarkdown(viewerData)
 </script>
-<script th:inline="javascript">
+<script>
+    // 게시글 수정 js
     const Modify = toastui.Editor;
 
     const modify = new Modify({
@@ -105,12 +108,38 @@
                 content: modify.getHTML(),
             },
             success: function(data) {
-                location.replace(data)
+                location.href = data
             },
             error: function(e) {
                 console.log(e)
             }
         });
     }});
+</script>
+<script>
+
+    $('#register-btn').on("click", function() {
+        const id = $.trim($('#register-id').val())
+        const pw = $.trim($('#register-pw').val())
+        const pwChk = $.trim($('#register-pw-check').val())
+        const name = $.trim($('#register-name').val())
+        const email = $.trim($('#register-email').val())
+
+        if(id === "" || pw === "" || name === "" || email === "") {
+            alert('빈 칸이 있는지 확인해주세요.')
+        } else {
+            if(pw !== pwChk) {
+                alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+            } else {
+                $('#registerForm').submit()
+            }
+        }
+    })
+</script>
+<script>
+    function loginCheck() {
+        alert('로그인 후 이용가능합니다.')
+        location.href = '/member/login'
+    }
 </script>
 </html>

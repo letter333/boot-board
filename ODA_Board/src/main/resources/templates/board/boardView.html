@@ -27,7 +27,7 @@
 <form class="form-floating row d-flex flex-row-reverse" sec:authorize="isAnonymous()" th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
     <textarea id="floatingTextarea" class="form-control comment col-8" name="comment" disabled></textarea>
     <label for="floatingTextarea">로그인 후 댓글작성이 가능합니다.</label>
-    <button class="btn btn-dark btn-sm col-2 mt-3" disabled type="submit">댓글달기</button>
+    <a class="btn btn-dark btn-sm col-2 mt-3" href="/member/login">로그인</a>
 </form>
 <div th:each="comment : ${commentList}">
 

@@ -1,5 +1,6 @@
 package com.kb.ODA_Board.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,11 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(); //csrf 비활성화
@@ -24,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("pw")
                 .loginProcessingUrl("/member/loginProc") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
                 .failureUrl("/member/login")
-                .defaultSuccessUrl("/board/list")
+                .successHandler(authenticationSuccessHandler)
                 .and()
             .logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))

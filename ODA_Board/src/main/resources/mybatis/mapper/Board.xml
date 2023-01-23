@@ -74,4 +74,8 @@
     <delete id="commentDelete" parameterType="Integer">
         delete from comment where cno = #{cno};
     </delete>
+
+    <update id="commentModify" parameterType="Map">
+        update comment set comment = #{comment} where cno = #{cno};
+    </update>
 </mapper>

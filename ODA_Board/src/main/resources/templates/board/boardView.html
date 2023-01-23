@@ -15,7 +15,7 @@
         <a class="btn btn-outline-dark btn-sm ms-2" th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
         <form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button class="btn btn-outline-dark btn-sm" type="submit">삭제하기</button>
+            <button class="btn btn-outline-dark btn-sm" id="board-delete-btn" type="button">삭제하기</button>
         </form>
     </div>
     <hr>
@@ -37,12 +37,12 @@
                 <button class="btn btn-outline-dark btn-sm mb-1" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#c${comment.cno}|, aria-controls=|c${comment.cno}|" aria-expanded="false">수정</button>
                 <form class="d-flex align-items-center" th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
                     <input type="hidden" name="_method" value="delete">
-                    <button class="btn btn-outline-danger btn-sm" type="submit">삭제</button>
+                    <button class="btn btn-outline-danger btn-sm" th:id="comment-delete-btn + ${comment.cno}" type="button">삭제</button>
                 </form>
             </div>
         </div>
         <div class="collapse" th:id="c+${comment.cno}">
-            <form class="row d-flex flex-row-reverse align-items-center mt-2" th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
+            <form class="row d-flex flex-row-reverse align-items-center mt-2" th:action="@{/board/comment/modify/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
                 <input type="hidden" name="_method" value="put">
                 <textarea name="comment" id="modify-comment" class="form-control comment col-8" th:text="${comment.comment}"></textarea>
                 <button class="btn btn-outline-dark btn-sm col-2 mt-3" type="submit">수정완료</button>

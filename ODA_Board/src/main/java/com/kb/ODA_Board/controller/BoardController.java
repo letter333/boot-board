@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,6 +100,17 @@ public class BoardController {
         commentDTO.setComment_bno(bno);
         commentDTO.setMember_id(memberId);
         boardService.commentWrite(commentDTO);
+
+        return "redirect:/board/view?bno=" + bno;
+    }
+
+    @PutMapping("/board/comment/modify/{cno}")
+    public String commentModify(@PathVariable("cno") int cno, int bno, String comment) {
+        Map<String, Object> map = new HashMap();
+        map.put("cno", cno);
+        map.put("comment", comment);
+
+        boardService.commentModify(map);
 
         return "redirect:/board/view?bno=" + bno;
     }

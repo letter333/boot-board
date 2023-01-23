@@ -17,4 +17,5 @@ public interface BoardService {
     void commentWrite(CommentDTO commentDTO);
     List<CommentDTO> commentList(int bno);
     void commentDelete(int cno);
+    void commentModify(Map map);
 }

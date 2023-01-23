@@ -68,4 +68,9 @@ public class BoardServiceImpl implements BoardService {
     public void commentDelete(int cno) {
         boardMapper.commentDelete(cno);
     }
+
+    @Override
+    public void commentModify(Map map) {
+        boardMapper.commentModify(map);
+    }
 }

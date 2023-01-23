@@ -32,7 +32,7 @@
         <a sec:authorize="isAuthenticated()" class="btn btn-outline-dark" th:href="@{/board/write}">글작성</a>
     </div>
     <form class="d-flex mb-3 justify-content-center" role="search">
-        <select class="form-select form-select-sm m-2" style="width: 7%;" name="searchType" aria-label=".form-select">
+        <select class="form-select form-select-sm m-2" style="width: 8%;" name="searchType" aria-label=".form-select">
             <eoption value="all">전체</eoption>
             <option value="author">글쓴이</option>
             <option value="title">제목</option>
@@ -61,5 +61,13 @@
         </ul>
     </nav>
 </div>
+<th:block layout:fragment="script">
+    <script>
+        function loginCheck() {
+            alert('로그인 후 이용가능합니다.')
+            location.href = '/member/login'
+        }
+    </script>
+</th:block>
 </body>
 </html>

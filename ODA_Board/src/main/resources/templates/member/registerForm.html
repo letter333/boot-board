@@ -5,17 +5,18 @@
   <meta charset="UTF-8">
   <title>회원가입</title>
 </head>
-<body class="text-center" layout:fragment="content">c
-<div id="container">
+<body class="text-center">
+<div id="container" layout:fragment="content">
 <form id="registerForm" th:action="@{/member/create}" method="post">
   <div id="loginBox">
     <div id="loginBoxTitle">회원가입</div>
     <div id="inputBox">
-      <div class="input-form-box"><input id="register-id" type="text" name="id" class="form-control ms-1" placeholder="*아이디"></div>
-      <div class="input-form-box"><input id="register-pw" type="password" name="pw" class="form-control ms-1" placeholder="*비밀번호"></div>
-      <div class="input-form-box"><input id="register-pw-check" type="password" name="pw-check" class="form-control ms-1" placeholder="*비밀번호 확인"></div>
-      <div class="input-form-box"><input id="register-name" type="text" name="name" class="form-control ms-1" placeholder="*이름"></div>
-      <div class="input-form-box"><input id="register-email" type="text" name="email" class="form-control ms-1" placeholder="*이메일"></div>
+      <div class="input-form-box"><input id="register-id" type="text" name="id" class="form-control ms-1" required placeholder="아이디"></div>
+      <div class="input-form-box"><button class="btn btn-outline-dark form-control ms-1 m-0" id="id-check" type="button">아이디 중복 확인</button></div>
+      <div class="input-form-box"><input id="register-pw" type="password" name="pw" class="form-control ms-1" required placeholder="비밀번호"></div>
+      <div class="input-form-box"><input id="register-pw-check" type="password" name="pw-check" class="form-control ms-1" required placeholder="비밀번호 확인"></div>
+      <div class="input-form-box"><input id="register-name" type="text" name="name" class="form-control ms-1" required placeholder="이름"></div>
+      <div class="input-form-box"><input id="register-email" type="text" name="email" class="form-control ms-1" required placeholder="이메일"></div>
       <div class="button-login-box">
         <button id="register-btn" type="button" class="btn btn-dark btn-xs" style="width:100%">회원가입</button>
       </div>
@@ -23,5 +24,59 @@
   </div>
 </form>
 </div>
+<th:block layout:fragment="script">
+  <script>
+    let flag = 'fail'
+
+    $('#register-btn').on("click", function() {
+      const id = $.trim($('#register-id').val())
+      const pw = $.trim($('#register-pw').val())
+      const pwChk = $.trim($('#register-pw-check').val())
+      const name = $.trim($('#register-name').val())
+      const email = $.trim($('#register-email').val())
+
+      if(id === "" || pw === "" || name === "" || email === "") {
+        alert('빈 칸이 있는지 확인해주세요.')
+      } else {
+        if(pw !== pwChk) {
+          alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+        } else {
+          if(flag === 'fail') {
+            alert('아이디 중복 확인을 해주세요.')
+          } else {
+            $('#registerForm').submit()
+          }
+        }
+      }
+    })
+
+    $('#id-check').on("click", function() {
+      const id = $.trim($('#register-id').val())
+      if(id === "") {
+        alert('아이디가 비어있습니다.')
+      } else {
+        $.ajax({
+          type: "post",
+          url: "/member/create/idCheck",
+          data: {
+            id: id
+          },
+          success: function(data) {
+            if(data === 0) {
+              alert('사용 가능한 아이디입니다.')
+              flag = 'success'
+              $('#id-check').attr('disabled', true)
+              $('#register-id').attr('readonly', true)
+            } else {
+              alert('중복된 아이디입니다.')
+            }
+          },
+          error: function(e) {
+            console.log(e)
+          }
+        });
+    }})
+  </script>
+</th:block>
 </body>
 </html>

@@ -7,4 +7,5 @@ import java.util.Map;
 public interface MemberService {
     int createMember(MemberDTO dto);
     int loginMember(String id);
+    int idCheck(String id);
 }

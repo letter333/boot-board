@@ -14,5 +14,51 @@
             <button class="btn btn-outline-dark" id="modifyBtn" type="button">수정</button>
         </div>
     </div>
+<th:block layout:fragment="script">
+    <script>
+        // 게시글 수정 js
+        const Modify = toastui.Editor;
+
+        const modify = new Modify({
+            el: document.querySelector('#modify-editor'),
+            height: '700px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical'
+        })
+
+        const modifyData = $('#modify-editor').data('content')
+
+        modify.setHTML(modifyData)
+
+        const bno = $('#bno').data('bno')
+
+        // 게시글 수정 ajax
+
+        $('#modifyBtn').on("click", function() {
+
+            const modifyTitle = $.trim($('#modifyTitle').val())
+            const modifyContent = $.trim(modify.getHTML())
+            const modifyContentStr = modifyContent.replace(/\s/gi, "")
+            // 유효성 검사
+            if(modifyTitle === "" || modifyContent === "<p><br></p>" || modifyContentStr === "<p></p>") {
+                alert('제목 또는 내용이 비어있습니다.');
+            } else {
+                $.ajax({
+                    type: "put",
+                    url: "/board/modifyProc/" + bno,
+                    data: {
+                        title: $('#modifyTitle').val(),
+                        content: modify.getHTML(),
+                    },
+                    success: function(data) {
+                        location.href = data
+                    },
+                    error: function(e) {
+                        console.log(e)
+                    }
+                });
+            }});
+    </script>
+</th:block>
 </body>
 </html>

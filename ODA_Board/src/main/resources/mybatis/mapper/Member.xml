@@ -11,4 +11,8 @@
     <select id="loginMember" parameterType="String" resultType="com.kb.ODA_Board.model.MemberDTO">
         select * from member_info where id = #{id};
     </select>
+
+    <select id="idCheck" parameterType="String" resultType="int">
+        select count(*) from member_info where id = #{id};
+    </select>
 </mapper>

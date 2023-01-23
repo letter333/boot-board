@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/member/create", "/member/login", "/board/view/**", "/board/list").permitAll()
+                .antMatchers("/member/create/**", "/member/login", "/board/view/**", "/board/list").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/member/**", "/board/**").authenticated()
                 .antMatchers("/**").permitAll();

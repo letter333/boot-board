@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <title th:text="${board.title}"></title>
 </head>
-<body layout:fragment="content">
-<div class="container" id="content-wrapper">
+<body>
+<div class="container mb-5" id="content-wrapper" layout:fragment="content">
     <p class="fs-1 fw-bold" th:text="${board.title}">제목</p>
     <p class="fs-5" th:text="${board.author}">작성자</p><hr>
     <div id="viewer" th:data-content="${board.content}"></div>
@@ -22,7 +22,7 @@
     <form class="form-floating row d-flex flex-row-reverse" sec:authorize="isAuthenticated()" th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
         <textarea id="floatingTextarea" class="form-control comment col-8" name="comment"></textarea>
         <label for="floatingTextarea">댓글을 작성하세요</label>
-        <button class="btn btn-dark btn-sm col-2 mt-3" type="submit">댓글달기</button>
+        <button class="btn btn-dark btn-sm col-2 mt-3" id="comment-write-btn" type="button">댓글달기</button>
     </form>
     <form class="form-floating row d-flex flex-row-reverse" sec:authorize="isAnonymous()" th:action="@{/board/comment/write/{bno}(bno=${board.bno})}" method="post">
         <textarea id="floatingTextarea" class="form-control comment col-8" name="comment" disabled></textarea>
@@ -51,5 +51,36 @@
         <hr>
     </div>
 </div>
+<th:block layout:fragment="script">
+    <script>
+        // 게시글 상세보기 js
+        const Viewer = toastui.Editor;
+
+        const viewer = new Viewer.factory({
+            el: document.querySelector('#viewer'),
+            viewer: true
+        })
+
+        const viewerData = $('#viewer').data('content');
+        viewer.setMarkdown(viewerData)
+    </script>
+    <script>
+        $("button[id*='delete-btn']").on("click", function() {
+            if(confirm('정말로삭제하시겠습니까?')) {
+                $(this).parent('form').submit()
+            }
+        })
+
+        $('#comment-write-btn').on("click", function() {
+            const commentVal = $('#floatingTextarea').val()
+
+            if($.trim(commentVal) === "") {
+                alert('댓글 입력창이 비어있습니다.')
+            } else {
+                $(this).parent('form').submit()
+            }
+        })
+    </script>
+</th:block>
 </body>
 </html>

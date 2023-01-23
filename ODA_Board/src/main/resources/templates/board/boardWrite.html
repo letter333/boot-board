@@ -15,5 +15,46 @@
         </div>
     </div>
 </div>
+<th:block layout:fragment="script">
+    <script>
+        // 게시글 작성 js
+        const Editor = toastui.Editor;
+
+        const editor = new Editor({
+            el: document.querySelector('#editor'),
+            height: '700px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            placeholder: '내용을 입력해주세요.'
+        });
+
+
+        // 게시글 작성 ajax
+        $('#submitBtn').on("click", function () {
+
+            const title = $.trim($('#title').val())
+            const content = $.trim(editor.getHTML())
+            const contentStr = content.replace(/\s/gi, "")
+            // 유효성 검사
+            if(title === "" || content === "<p><br></p>" || contentStr === "<p></p>") {
+                alert('제목 또는 내용이 비어있습니다.');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/board/writeProc",
+                    data: {
+                        title: title,
+                        content: editor.getHTML(),
+                    },
+                    success: function (data) {
+                        location.href = data
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                });
+            }});
+    </script>
+</th:block>
 </body>
 </html>

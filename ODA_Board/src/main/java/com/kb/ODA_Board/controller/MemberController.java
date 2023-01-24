@@ -1,6 +1,7 @@
 package com.kb.ODA_Board.controller;
 
 import com.kb.ODA_Board.model.MemberDTO;
+import com.kb.ODA_Board.service.MailServiceImpl;
 import com.kb.ODA_Board.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-    private final MemberServiceImpl service;
+    private final MemberServiceImpl memberService;
+    private final MailServiceImpl mailService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/create")
@@ -28,7 +30,7 @@ public class MemberController {
         String rawPw = dto.getPw();
         String encPw = passwordEncoder.encode(rawPw);
         dto.setPw(encPw);
-        service.createMember(dto);
+        memberService.createMember(dto);
         return "redirect:/member/login";
     }
 
@@ -46,6 +48,14 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/create/idCheck")
     public int memberCheck(String id) {
-        return service.idCheck(id);
+        return memberService.idCheck(id);
+    }
+
+    @ResponseBody
+    @PostMapping("/create/emailCheck")
+    public String memberEmailCheck(String email) throws Exception {
+        String code = mailService.sendSimpleMessage(email);
+
+        return code;
     }
 }

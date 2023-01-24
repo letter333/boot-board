@@ -16,7 +16,12 @@
       <div class="input-form-box"><input id="register-pw" type="password" name="pw" class="form-control ms-1" required placeholder="비밀번호"></div>
       <div class="input-form-box"><input id="register-pw-check" type="password" name="pw-check" class="form-control ms-1" required placeholder="비밀번호 확인"></div>
       <div class="input-form-box"><input id="register-name" type="text" name="name" class="form-control ms-1" required placeholder="이름"></div>
-      <div class="input-form-box"><input id="register-email" type="text" name="email" class="form-control ms-1" required placeholder="이메일"></div>
+      <div class="input-form-box"><input id="register-email" type="email" name="email" class="form-control ms-1" required placeholder="이메일"></div>
+      <div class="input-form-box"><button class="btn btn-outline-dark form-control ms-1 m-0" id="email-check" type="button">인증번호 전송</button></div>
+      <label for="email-confirm" id="email-confirm-text">인증번호를 입력해주세요.</label>
+      <div class="input-form-box">
+        <input id="email-confirm" type="text" class="form-control ms-1" required placeholder="인증번호">
+      </div>
       <div class="button-login-box">
         <button id="register-btn" type="button" class="btn btn-dark btn-xs" style="width:100%">회원가입</button>
       </div>
@@ -27,6 +32,7 @@
 <th:block layout:fragment="script">
   <script>
     let flag = 'fail'
+    let confirmRes = false
 
     $('#register-btn').on("click", function() {
       const id = $.trim($('#register-id').val())
@@ -38,8 +44,8 @@
       if(id === "" || pw === "" || name === "" || email === "") {
         alert('빈 칸이 있는지 확인해주세요.')
       } else {
-        if(pw !== pwChk) {
-          alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+        if(flag === 'fail' || confirmRes === false) {
+          alert('아이디 중복 확인 또는 이메일 인증을 해주세요.')
         } else {
           if(flag === 'fail') {
             alert('아이디 중복 확인을 해주세요.')
@@ -76,6 +82,39 @@
           }
         });
     }})
+
+    $('#email-check').on("click", function() {
+      $.ajax({
+        type: "post",
+        url: "/member/create/emailCheck",
+        data: {
+          email: $('#register-email').val()
+        },
+        success: function(data) {
+          alert('인증번호 발송이 완료되었습니다. 이메일을 환인해주세요.')
+          $('#email-confirm').on("keyup", function() {
+            // 인증 실패
+            if(data !== $('#email-confirm').val()) {
+              confirmRes = false
+              $('#email-confirm-text').html("<span id='confirmRes'>인증번호가 잘못되었습니다</span>")
+              $('#confirmRes').css({
+                "color": "#FA3E3E",
+                "font-weight": "bold"
+              })
+              // 인증 성공
+            } else {
+              confirmRes = true
+              $('#email-confirm-text').html("<span id='confirmRes'>인증번호 확인완료.</span>")
+              $('#confirmRes').css({
+                "color": "#0D6EFD",
+                "font-weight": "bold"
+              })
+              $('#email-check').attr("disabled", true)
+            }
+          })
+        }
+      })
+    })
   </script>
 </th:block>
 </body>

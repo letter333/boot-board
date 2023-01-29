@@ -29,12 +29,14 @@ public class BoardServiceImpl implements BoardService {
 
     // bno에 해당하는 게시글 보기
     @Override
+    @Transactional(readOnly = true)
     public BoardDTO boardView(Integer bno) {
         return boardMapper.boardView(bno);
     }
 
     // 페이지 번호에 해당하는 게시글 리스트
     @Override
+    @Transactional(readOnly = true)
     public List<BoardDTO> boardList(PageDTO pageDTO) {
         return boardMapper.boardList(pageDTO);
     }
@@ -60,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDTO> commentList(int bno) {
         return boardMapper.commentList(bno);
     }

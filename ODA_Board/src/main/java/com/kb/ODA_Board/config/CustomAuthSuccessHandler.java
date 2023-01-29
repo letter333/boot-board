@@ -28,10 +28,9 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-        /**
-         * prevPage가 존재하는 경우 = 사용자가 직접 /member/login 경로로 로그인 요청
-         * 기존 Session의 prevPage attribute 제거
-         */
+
+        // prevPage가 존재하는 경우 = 사용자가 직접 /member/login 경로로 로그인 요청
+        // 기존 Session의 prevPage attribute 제거
         String prevPage = (String) request.getSession().getAttribute("prevPage");
         if (prevPage != null) {
             request.getSession().removeAttribute("prevPage");
@@ -40,10 +39,9 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         // 기본 URI
         String uri = "/";
 
-        /**
-         * savedRequest 존재하는 경우 = 인증 권한이 없는 페이지 접근
-         * Security Filter가 인터셉트하여 savedRequest에 세션 저장
-         */
+
+        // savedRequest 존재하는 경우 = 인증 권한이 없는 페이지 접근
+        // Security Filter가 인터셉트하여 savedRequest에 세션 저장
         if (savedRequest != null) {
             uri = savedRequest.getRedirectUrl();
         } else if (prevPage != null && !prevPage.equals("")) {

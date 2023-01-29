@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        MemberDTO memberDTO = memberMapper.loginMember(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저"));
+        MemberDTO memberDTO = memberMapper.loginMember(id).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자입니다."));
 
         if(memberDTO != null) {
             return new User(memberDTO);

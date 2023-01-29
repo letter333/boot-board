@@ -35,12 +35,18 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String memberLoginForm(HttpServletRequest request) {
+    public String memberLoginForm(HttpServletRequest request,
+                                  @RequestParam(value="error", required = false) String error,
+                                  @RequestParam(value = "exception", required = false) String exception,
+                                  Model model) {
         // 이전 페이지로 되돌아가기 위한 Referer 헤더값을 세션의 prevPage attribute로 저장
         String uri = request.getHeader("Referer");
         if (uri != null && !uri.contains("/login")) {
             request.getSession().setAttribute("prevPage", uri);
         }
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
 
         return "/member/loginForm";
     }

@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().sameOrigin();
         http.csrf().disable(); //csrf 비활성화
         http
             .formLogin()
@@ -43,8 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/member/create/**", "/member/login", "/board/view/**", "/board/list").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/member/**", "/board/**").authenticated()
+                .antMatchers("/member/**", "/board/**", "/chat/**").authenticated()
                 .antMatchers("/**").permitAll();
+
     }
 
     @Override

@@ -18,7 +18,7 @@
       <div class="input-group mb-3">
         <input type="text" id="msg" class="form-control">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+          <button class="btn btn-outline-dark" type="button" id="button-send">전송</button>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
     $(document).ready(function(){
 
       let roomName = [[${room.name}]];
-      let roomId = [[${room.roomId}]];
+      let room_id = [[${room.room_id}]];
       let username = [[${#authentication.principal.username}]];
 
       let sockJs = new SockJS("/stomp/chat");
@@ -41,7 +41,7 @@
       stomp.connect({}, function (){
 
         // subscribe(path, callback)으로 메세지를 받을 수 있음
-        stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
+        stomp.subscribe("/sub/chat/room/" + room_id, function (chat) {
           let content = JSON.parse(chat.body);
           let message = content.message
           let writer = content.writer;
@@ -64,12 +64,12 @@
         });
 
         // send(path, header, message)로 메세지를 보낼 수 있음
-        stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
+        stomp.send('/pub/chat/enter', {}, JSON.stringify({room_id: room_id, writer: username}))
       });
 
       $("#button-send").on("click", function(e){
         let msg = document.getElementById("msg");
-        stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+        stomp.send('/pub/chat/message', {}, JSON.stringify({room_id: room_id, message: msg.value, writer: username}));
         msg.value = '';
       });
     });

@@ -1,6 +1,6 @@
 package com.kb.ODA_Board.service;
 
-import com.kb.ODA_Board.model.RoomDTO;
+import com.kb.ODA_Board.model.Room;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -8,27 +8,27 @@ import java.util.*;
 
 @Repository
 public class RoomRepository {
-    private Map<String, RoomDTO> roomDTOMap;
+    private Map<String, Room> roomMap;
 
     @PostConstruct
     private void init() {
-        roomDTOMap = new LinkedHashMap<>();
+        roomMap = new LinkedHashMap<>();
     }
 
-    public List<RoomDTO> findAllRooms() {
-        List<RoomDTO> result = new ArrayList<>(roomDTOMap.values());
+    public List<Room> findAllRooms() {
+        List<Room> result = new ArrayList<>(roomMap.values());
         Collections.reverse(result);
 
         return result;
     }
 
-    public RoomDTO findRoomById(String id) {
-        return roomDTOMap.get(id);
+    public Room findRoomById(String id) {
+        return roomMap.get(id);
     }
 
-    public RoomDTO createRoomDTO(String name) {
-        RoomDTO room = RoomDTO.create(name);
-        roomDTOMap.put(room.getRoomId(), room);
+    public Room createRoomDTO(String name) {
+        Room room = Room.create(name);
+        roomMap.put(room.getRoom_id(), room);
 
         return room;
     }

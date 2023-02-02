@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.ODA_Board.mapper.ChatMapper">
+    <insert id="createRoom" parameterType="com.kb.ODA_Board.model.Room">
+        insert into chat (room_id, name, master) values (#{room_id}, #{name}, #{master});
+    </insert>
+
+    <select id="roomList" resultType="com.kb.ODA_Board.model.Room">
+        select * from chat order by createdAt desc;
+    </select>
+
+    <select id="getRoom" parameterType="String" resultType="com.kb.ODA_Board.model.Room">
+        select * from chat where room_id = #{room_id};
+    </select>
+</mapper>

@@ -14,11 +14,11 @@ public class StompChatController {
     @MessageMapping(value = "/chat/enter")
     public void enter(MessageDTO messageDTO) {
         messageDTO.setMessage(messageDTO.getWriter() + " 님이 채팅방에 참여하였습니다.");
-        template.convertAndSend("/sub/chat/room/" + messageDTO.getRoomId(), messageDTO);
+        template.convertAndSend("/sub/chat/room/" + messageDTO.getRoom_id(), messageDTO);
     }
 
     @MessageMapping(value = "/chat/message")
     public void message(MessageDTO messageDTO) {
-        template.convertAndSend("/sub/chat/room/" + messageDTO.getRoomId(), messageDTO);
+        template.convertAndSend("/sub/chat/room/" + messageDTO.getRoom_id(), messageDTO);
     }
 }

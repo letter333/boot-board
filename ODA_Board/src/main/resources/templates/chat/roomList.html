@@ -11,7 +11,10 @@
             <div class="row row-cols-3">
                 <div th:each="room : ${list}">
                     <div class="shadow m-3 bg-body rounded col">
-                        <a class="d-block p-3 text-decoration-none text-dark" th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name}]]</a>
+                        <a class="d-block p-3 text-decoration-none text-dark fw-bold fs-3" th:href="@{/chat/room(room_id=${room.room_id})}">
+                            [[${room.name}]]
+                            <p class="pt-1 m-0 fw-semibold fs-6">방장 : [[${room.master}]]</p>
+                        </a>
                     </div>
                 </div>
             </div>

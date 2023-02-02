@@ -20,7 +20,7 @@ public class RoomController {
     public String getRooms(Model model) {
         model.addAttribute("list", roomRepository.findAllRooms());
 
-        return "/chat/rooms";
+        return "/chat/roomList";
     }
 
     @PostMapping("/room")

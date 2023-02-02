@@ -27,3 +27,7 @@
 .ck-editor__editable[role="textbox"] {
     min-height: 700px;
 }
+
+#room-container {
+    min-height: 700px;
+}

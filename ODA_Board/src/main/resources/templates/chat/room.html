@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>채팅</h1>
-<div class="container mt-5" layout:fragment="content">
+<div class="container mt-5" id="room-container" layout:fragment="content">
   <div class="col-6">
     <h1>[[${room.name}]]</h1>
   </div>
@@ -33,17 +33,14 @@
       let roomId = [[${room.roomId}]];
       let username = [[${#authentication.principal.username}]];
 
-      console.log(roomName + ", " + roomId + ", " + username);
-
       let sockJs = new SockJS("/stomp/chat");
-      //1. SockJS를 내부에 들고있는 stomp를 내어줌
+      // SockJS를 내부에 들고있는 stomp를 내어줌
       let stomp = Stomp.over(sockJs);
 
-      //2. connection이 맺어지면 실행
+      // connection이 맺어지면 실행
       stomp.connect({}, function (){
-        console.log("STOMP Connection")
 
-        //4. subscribe(path, callback)으로 메세지를 받을 수 있음
+        // subscribe(path, callback)으로 메세지를 받을 수 있음
         stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
           let content = JSON.parse(chat.body);
           let message = content.message
@@ -66,14 +63,12 @@
           }
         });
 
-        //3. send(path, header, message)로 메세지를 보낼 수 있음
+        // send(path, header, message)로 메세지를 보낼 수 있음
         stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
       });
 
       $("#button-send").on("click", function(e){
         let msg = document.getElementById("msg");
-
-        console.log(username + ":" + msg.value);
         stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
         msg.value = '';
       });

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-5" layout:fragment="content">
+    <div id="room-container">
+            <div class="row row-cols-3">
+                <div th:each="room : ${list}">
+                    <div class="shadow m-3 bg-body rounded col">
+                        <a class="d-block p-3 text-decoration-none text-dark" th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name}]]</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="d-flex flex-row-reverse">
+        <button type="button" class="btn btn-outline-dark mb-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            방만들기
+        </button>
+    </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">채팅방 생성하기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/chat/room}" method="post">
+                    <div class="modal-body">
+                        <span>방제목</span>
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-dark" id="room-create-btn">만들기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $("#room-create-btn").on("click", function (e){
+                e.preventDefault();
+
+                let name = $("input[name='name']").val();
+
+                if(name === "") {
+                    alert("방제목을 입력해주세요.")
+                } else if(name.length > 15) {
+                    alert("방제목이 너무 깁니다.")
+                } else {
+                    $("form").submit();
+
+                    alert(name + "방이 개설되었습니다.");
+                }
+            });
+
+        });
+    </script>
+</th:block>
+</body>
+</html>

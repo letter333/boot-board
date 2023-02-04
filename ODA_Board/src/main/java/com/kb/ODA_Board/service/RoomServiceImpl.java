@@ -29,4 +29,9 @@ public class RoomServiceImpl implements RoomService {
     public Room getRoom(String room_id) {
         return chatMapper.getRoom(room_id);
     }
+
+    @Override
+    public void deleteRoom(String room_id) {
+        chatMapper.deleteRoom(room_id);
+    }
 }

@@ -12,4 +12,5 @@ public interface ChatMapper {
     void createRoom(Room room);
     List<Room> roomList();
     Room getRoom(String room_id);
+    void deleteRoom(String room_id);
 }

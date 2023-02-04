@@ -15,4 +15,8 @@
     <select id="getRoom" parameterType="String" resultType="com.kb.ODA_Board.model.Room">
         select * from chat where room_id = #{room_id};
     </select>
+
+    <delete id="deleteRoom" parameterType="String">
+        delete from chat where room_id = #{room_id};
+    </delete>
 </mapper>

@@ -4,11 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>채팅방 : [[${room.name}]]</title>
 </head>
 <body>
-<h1>채팅</h1>
 <div class="container mt-5" id="room-container" layout:fragment="content">
+  <form class="d-flex flex-row-reverse" id="room-delete-form" th:action="@{/chat/room/delete/{room_id}(room_id=${room.room_id})}" th:if="${room.master} == ${memberId}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="button" class="btn btn-dark" id="room-delete-btn">채팅방 삭제</button>
+  </form>
   <div class="d-flex justify-content-center">
     <h1>[[${room.name}]]</h1>
   </div>
@@ -47,14 +50,14 @@
 
             if (writer === username) {
               str = "<div class='d-flex flex-row-reverse'>";
-              str += "<div class='alert alert-dark'>";
+              str += "<div class='alert alert-dark' id='msg-box'>";
               str += "<b>" + message + "</b>";
               str += "</div></div>";
               $("#msg-area").append(str);
               $("#msg-area").scrollTop($("#msg-area")[0].scrollHeight)
             } else {
               str = "<div class='d-flex'>";
-              str += "<div class='alert alert-secondary'>";
+              str += "<div class='alert alert-secondary' id='msg-box'>";
               str += "<b>" + writer + " : " + message + "</b>";
               str += "</div></div>";
               $("#msg-area").append(str);
@@ -78,6 +81,14 @@
 
       });
     });
+
+    $("#room-delete-btn").on("click", function() {
+      let result = confirm("정말로 채팅방을 삭제하시겠습니까?")
+
+      if(result) {
+        $("#room-delete-form").submit()
+      }
+    })
   </script>
 </th:block>
 </body>

@@ -9,27 +9,25 @@
 <body>
 <h1>채팅</h1>
 <div class="container mt-5" id="room-container" layout:fragment="content">
-  <div class="col-6">
+  <div class="d-flex justify-content-center">
     <h1>[[${room.name}]]</h1>
   </div>
-  <div>
-    <div id="msgArea" class="col"></div>
-    <div class="col-6">
-      <div class="input-group mb-3">
-        <input type="text" id="msg" class="form-control">
+  <div class="d-flex flex-column">
+    <div id="msg-area" class="border border-1 rounded p-3"></div>
+    <div class="">
+      <div class="input-group mb-3 mt-5">
+        <input type="text" id="msg" class="form-control me-2">
         <div class="input-group-append">
-          <button class="btn btn-outline-dark" type="button" id="button-send">전송</button>
+          <button class="btn btn-outline-dark" type="button" id="send-btn">전송</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-6"></div>
 </div>
 <th:block layout:fragment="script">
   <script th:inline="javascript">
     $(document).ready(function(){
 
-      let roomName = [[${room.name}]];
       let room_id = [[${room.room_id}]];
       let username = [[${#authentication.principal.username}]];
 
@@ -47,30 +45,37 @@
           let writer = content.writer;
           let str = '';
 
-          if(writer === username){
-            str = "<div class='col-6'>";
-            str += "<div class='alert alert-secondary'>";
-            str += "<b>" + writer + " : " + message + "</b>";
-            str += "</div></div>";
-            $("#msgArea").append(str);
-          }
-          else{
-            str = "<div class='col-6'>";
-            str += "<div class='alert alert-warning'>";
-            str += "<b>" + writer + " : " + message + "</b>";
-            str += "</div></div>";
-            $("#msgArea").append(str);
-          }
+            if (writer === username) {
+              str = "<div class='d-flex flex-row-reverse'>";
+              str += "<div class='alert alert-dark'>";
+              str += "<b>" + message + "</b>";
+              str += "</div></div>";
+              $("#msg-area").append(str);
+              $("#msg-area").scrollTop($("#msg-area")[0].scrollHeight)
+            } else {
+              str = "<div class='d-flex'>";
+              str += "<div class='alert alert-secondary'>";
+              str += "<b>" + writer + " : " + message + "</b>";
+              str += "</div></div>";
+              $("#msg-area").append(str);
+              $("#msg-area").scrollTop($("#msg-area")[0].scrollHeight)
+            }
         });
 
         // send(path, header, message)로 메세지를 보낼 수 있음
         stomp.send('/pub/chat/enter', {}, JSON.stringify({room_id: room_id, writer: username}))
       });
 
-      $("#button-send").on("click", function(e){
+      $("#send-btn").on("click", function(e){
         let msg = document.getElementById("msg");
-        stomp.send('/pub/chat/message', {}, JSON.stringify({room_id: room_id, message: msg.value, writer: username}));
-        msg.value = '';
+
+        if(msg.value === '') {
+          alert('메시지가 비어있습니다.')
+        } else {
+          stomp.send('/pub/chat/message', {}, JSON.stringify({room_id: room_id, message: msg.value, writer: username}));
+          msg.value = '';
+        }
+
       });
     });
   </script>

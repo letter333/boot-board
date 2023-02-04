@@ -8,8 +8,8 @@
 </head>
 <body>
 <div class="container mb-5" id="content-wrapper" layout:fragment="content">
-    <p class="fs-1 fw-bold" th:text="${board.title}">제목</p>
-    <p class="fs-5" th:text="${board.author}">작성자</p><hr>
+    <p class="fs-1 fw-bold">[[${board.title}]]</p>
+    <p class="fs-5">[[${board.author}]]</p><hr>
     <div id="viewer" th:data-content="${board.content}"></div>
     <div class="d-flex flex-row-reverse" th:if="${board.author} == ${memberId}">
         <a class="btn btn-outline-dark btn-sm ms-2" th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
@@ -32,7 +32,7 @@
     <div th:each="comment : ${commentList}" id="comment-list" th:data-bno="${board.bno}">
         <p class="fw-bold" th:text="${comment.member_id}">댓글작성자</p>
         <div class="row">
-            <p class="col-10 mb-0 d-flex align-items-center" th:text="${comment.comment}">댓글내용</p>
+            <p class="col-10 mb-0 d-flex align-items-center">[[${comment.comment}]]</p>
             <div class="col-2" th:if="${comment.member_id} == ${memberId}">
                 <button class="btn btn-outline-dark btn-sm mb-1" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#c${comment.cno}|, aria-controls=|c${comment.cno}|" aria-expanded="false">수정</button>
                 <form class="d-flex align-items-center" th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">

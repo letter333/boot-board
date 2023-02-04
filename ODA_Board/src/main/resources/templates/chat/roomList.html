@@ -8,6 +8,10 @@
 <body>
 <div class="container mt-5" layout:fragment="content">
     <div id="room-container">
+        <div th:if="${#lists.isEmpty(list)}">
+            <h1>현재 생성되어있는 채팅방이 없습니다.</h1>
+            <h2>우측하단의 버튼을 클릭해 채팅방을 만들어주세요.</h2>
+        </div>
             <div class="row row-cols-3">
                 <div th:each="room : ${list}">
                     <div class="shadow m-3 bg-body rounded col">

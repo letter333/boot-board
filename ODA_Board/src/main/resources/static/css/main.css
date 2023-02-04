@@ -9,6 +9,7 @@
 
 #content-wrapper {
     width: 840px;
+    min-height: 700px;
     margin-top: 8rem;
 }
 
@@ -29,5 +30,10 @@
 }
 
 #room-container {
-    min-height: 700px;
+    min-height: 800px;
+}
+
+#msg-area {
+    height: 560px;
+    overflow: auto;
 }

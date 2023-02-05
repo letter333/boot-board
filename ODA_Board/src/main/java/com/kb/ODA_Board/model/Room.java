@@ -15,7 +15,6 @@ public class Room {
     private String room_id;
     private String name;
     private String master;
-    private Set<WebSocketSession> sessions = new HashSet<>();
 
     public static Room create(String name) {
         Room room = new Room();

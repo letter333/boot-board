@@ -17,7 +17,7 @@ public class RoomController {
     private final RoomServiceImpl roomService;
 
     // 채팅방 리스트
-    @GetMapping("/rooms")
+    @GetMapping("/list")
     public String getRooms(Model model) {
         model.addAttribute("list", roomService.roomList());
 

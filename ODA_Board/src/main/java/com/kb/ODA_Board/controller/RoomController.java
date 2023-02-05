@@ -1,5 +1,6 @@
 package com.kb.ODA_Board.controller;
 
+import com.kb.ODA_Board.model.Room;
 import com.kb.ODA_Board.service.RoomRepository;
 import com.kb.ODA_Board.service.RoomService;
 import com.kb.ODA_Board.service.RoomServiceImpl;
@@ -27,9 +28,11 @@ public class RoomController {
     // 채팅방 생성
     @PostMapping("/room")
     public String createRoom(@RequestParam String name, RedirectAttributes rttr) {
-        rttr.addFlashAttribute("roomName", roomService.createRoom(name));
+        Room room = roomService.createRoom(name);
 
-        return "redirect:/chat/rooms";
+        rttr.addFlashAttribute("roomName", room);
+
+        return "redirect:/chat/room?room_id=" + room.getRoom_id();
     }
 
     // 채팅방 화면
@@ -47,6 +50,6 @@ public class RoomController {
     public String deleteRoom(@PathVariable String room_id) {
         roomService.deleteRoom(room_id);
 
-        return "redirect:/chat/rooms";
+        return "redirect:/chat/list";
     }
 }

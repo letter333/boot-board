@@ -28,7 +28,8 @@
                         <a class="nav-link" th:href="@{/member/login}" data-toggle="modal" data-target="#loginModal">Login</a>
                     </li>
 
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <li class="nav-item d-flex" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="#">내정보</a>
                         <a class="nav-link" th:href="@{/member/logout}" data-toggle="modal" data-target="#loginModal">Logout</a>
                     </li>
                 </ul>

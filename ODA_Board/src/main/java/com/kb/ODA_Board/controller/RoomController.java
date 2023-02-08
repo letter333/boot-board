@@ -1,8 +1,6 @@
 package com.kb.ODA_Board.controller;
 
 import com.kb.ODA_Board.model.Room;
-import com.kb.ODA_Board.service.RoomRepository;
-import com.kb.ODA_Board.service.RoomService;
 import com.kb.ODA_Board.service.RoomServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

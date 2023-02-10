@@ -37,6 +37,16 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         return memberMapper.idCheck(id);
     }
 
+    @Override
+    public MemberDTO getMember(String id) {
+        return memberMapper.getMember(id);
+    }
+
+    @Override
+    public void modifyMember(MemberDTO memberDTO) {
+        memberMapper.modifyMember(memberDTO);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {

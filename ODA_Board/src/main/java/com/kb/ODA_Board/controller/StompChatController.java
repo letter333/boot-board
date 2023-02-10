@@ -37,7 +37,7 @@ public class StompChatController {
         String roomId = (String) headerAccessor.getSessionAttributes().get("room_id");
 
         MessageDTO messageDTO = new MessageDTO();
-        messageDTO.setWriter("system");
+        messageDTO.setWriter(user);
         messageDTO.setMessage(user + "님이 퇴장하셨습니다.");
 
         template.convertAndSend("/sub/chat/room/" + roomId, messageDTO);

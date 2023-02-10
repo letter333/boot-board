@@ -11,7 +11,7 @@
     <p class="fs-1 fw-bold">[[${board.title}]]</p>
     <p class="fs-5">[[${board.author}]]</p><hr>
     <div id="viewer" th:data-content="${board.content}"></div>
-    <div class="d-flex flex-row-reverse" th:if="${board.author} == ${memberId}">
+    <div class="d-flex flex-row-reverse" th:if="${board.author} == ${#authentication.name}">
         <a class="btn btn-outline-dark btn-sm ms-2" th:href="@{/board/modify/{bno}(bno=${board.bno})}">수정하기</a>
         <form th:action="@{/board/delete/{bno}(bno=${board.bno})}" method="post">
             <input type="hidden" name="_method" value="delete">
@@ -33,7 +33,7 @@
         <p class="fw-bold" th:text="${comment.member_id}">댓글작성자</p>
         <div class="row">
             <p class="col-10 mb-0 d-flex align-items-center">[[${comment.comment}]]</p>
-            <div class="col-2" th:if="${comment.member_id} == ${memberId}">
+            <div class="col-2" th:if="${comment.member_id} == ${#authentication.name}">
                 <button class="btn btn-outline-dark btn-sm mb-1" type="button" data-bs-toggle="collapse" th:attr="data-bs-target=|#c${comment.cno}|, aria-controls=|c${comment.cno}|" aria-expanded="false">수정</button>
                 <form class="d-flex align-items-center" th:action="@{/board/comment/delete/{cno}(cno=${comment.cno}, bno=${comment.comment_bno})}" method="post">
                     <input type="hidden" name="_method" value="delete">

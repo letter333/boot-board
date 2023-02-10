@@ -64,4 +64,25 @@ public class MemberController {
 
         return code;
     }
+
+    @GetMapping("/detail/{id}")
+    public String memberDetail(@PathVariable("id") String id, Model model) {
+        model.addAttribute("member", memberService.getMember(id));
+
+        return "/member/memberDetail";
+    }
+
+    @GetMapping("/modify/{id}")
+    public String memberModify(@PathVariable("id") String id, Model model) {
+        model.addAttribute("member", memberService.getMember(id));
+
+        return "/member/memberModify";
+    }
+
+    @PostMapping("/modifyProc/{id}")
+    public String memberModifyProc(@PathVariable("id") String id, MemberDTO memberDTO) {
+        memberService.modifyMember(memberDTO);
+
+        return "redirect:/member/detail/" + id;
+    }
 }

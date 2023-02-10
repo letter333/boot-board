@@ -12,7 +12,15 @@
         select * from member_info where id = #{id};
     </select>
 
+    <select id="getMember" parameterType="String" resultType="com.kb.ODA_Board.model.MemberDTO">
+        select * from member_info where id = #{id};
+    </select>
+
     <select id="idCheck" parameterType="String" resultType="int">
         select count(*) from member_info where id = #{id};
     </select>
+
+    <update id="modifyMember" parameterType="com.kb.ODA_Board.model.MemberDTO">
+        update member_info set name = #{name}, email = #{email} where id = #{id};
+    </update>
 </mapper>

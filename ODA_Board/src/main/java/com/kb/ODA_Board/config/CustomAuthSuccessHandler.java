@@ -37,7 +37,7 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         }
 
         // 기본 URI
-        String uri = "/";
+        String uri = "/board/list";
 
 
         // savedRequest 존재하는 경우 = 인증 권한이 없는 페이지 접근

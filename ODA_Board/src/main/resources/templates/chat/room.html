@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container mt-5" id="room-container" layout:fragment="content">
-  <form class="d-flex flex-row-reverse" id="room-delete-form" th:action="@{/chat/room/delete/{room_id}(room_id=${room.room_id})}" th:if="${room.master} == ${memberId}" method="post">
+  <form class="d-flex flex-row-reverse" id="room-delete-form" th:action="@{/chat/room/delete/{room_id}(room_id=${room.room_id})}" th:if="${room.master} == ${#authentication.name}" method="post">
     <input type="hidden" name="_method" value="delete">
     <button type="button" class="btn btn-dark" id="room-delete-btn">채팅방 삭제</button>
   </form>
@@ -41,7 +41,7 @@
       // connection이 맺어지면 실행
       stomp.connect({}, function (){
 
-        // subscribe(path, callback)으로 메세지를 받을 수 있음
+        // subscribe(path, callback)으로 메세지를 받을 수 있음, 해당 주소를 구독
         stomp.subscribe("/sub/chat/room/" + room_id, function (chat) {
           let content = JSON.parse(chat.body);
           let message = content.message

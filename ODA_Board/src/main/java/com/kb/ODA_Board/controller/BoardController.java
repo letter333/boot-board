@@ -52,11 +52,8 @@ public class BoardController {
 
     @GetMapping("/board/view")
     public String boardView(Model model, Integer bno) {
-        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-
         model.addAttribute("board", boardService.boardView(bno));
         model.addAttribute("commentList", boardService.commentList(bno));
-        model.addAttribute("memberId", memberId);
 
         return "/board/boardView";
     }

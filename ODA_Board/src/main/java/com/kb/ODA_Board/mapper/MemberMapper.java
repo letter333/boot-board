@@ -13,4 +13,6 @@ public interface MemberMapper {
     int createMember(MemberDTO dto);
     Optional<MemberDTO> loginMember(String id);
     int idCheck(String id);
+    MemberDTO getMember(String id);
+    void modifyMember(MemberDTO memberDTO);
 }

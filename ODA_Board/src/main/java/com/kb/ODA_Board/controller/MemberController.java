@@ -94,17 +94,23 @@ public class MemberController {
         return "/member/findPassword";
     }
 
+    @ResponseBody
     @PostMapping("/findPasswordProc")
-    public String findPasswordProc(MemberDTO memberDTO) throws Exception {
-        String type = "findPassword";
-        String code = mailService.sendSimpleMessage(memberDTO.getEmail(), type);
+    public String findPasswordProc(String id, String email) throws Exception {
+        MemberDTO memberDTO = memberService.getMember(id);
+        if(memberDTO.getEmail().equals(email)) {
+            String type = "findPassword";
+            String code = mailService.sendSimpleMessage(email, type);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("pw", passwordEncoder.encode(code));
-        map.put("id", memberDTO.getId());
+            Map<String, Object> map = new HashMap<>();
+            map.put("pw", passwordEncoder.encode(code));
+            map.put("id", id);
 
-        memberService.resetPassword(map);
+            memberService.resetPassword(map);
 
-        return "redirect:/member/login";
+            return "success";
+        }
+
+        return "fail";
     }
 }

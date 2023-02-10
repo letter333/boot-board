@@ -23,4 +23,8 @@
     <update id="modifyMember" parameterType="com.kb.ODA_Board.model.MemberDTO">
         update member_info set name = #{name}, email = #{email} where id = #{id};
     </update>
+
+    <update id="resetPassword" parameterType="Map">
+        update member_info set pw = #{pw} where id = #{id};
+    </update>
 </mapper>

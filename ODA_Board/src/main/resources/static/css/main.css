@@ -42,7 +42,7 @@
     max-width: 400px;
 }
 
-#detail-wrapper, #modify-wrapper {
+#detail-wrapper, #modify-wrapper, #find-wrapper {
     min-height: 720px;
     width: 840px;
     margin-top: 6rem;

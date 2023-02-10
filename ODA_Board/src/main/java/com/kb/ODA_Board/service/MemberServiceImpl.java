@@ -47,6 +47,11 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         memberMapper.modifyMember(memberDTO);
     }
 
+    @Override
+    public void resetPassword(Map map) {
+        memberMapper.resetPassword(map);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {

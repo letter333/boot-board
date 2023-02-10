@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,7 +62,8 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/create/emailCheck")
     public String memberEmailCheck(String email) throws Exception {
-        String code = mailService.sendSimpleMessage(email);
+        String type = "createMember";
+        String code = mailService.sendSimpleMessage(email, type);
 
         return code;
     }
@@ -84,5 +87,24 @@ public class MemberController {
         memberService.modifyMember(memberDTO);
 
         return "redirect:/member/detail/" + id;
+    }
+
+    @GetMapping("/findPassword")
+    public String findPassword() {
+        return "/member/findPassword";
+    }
+
+    @PostMapping("/findPasswordProc")
+    public String findPasswordProc(MemberDTO memberDTO) throws Exception {
+        String type = "findPassword";
+        String code = mailService.sendSimpleMessage(memberDTO.getEmail(), type);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("pw", passwordEncoder.encode(code));
+        map.put("id", memberDTO.getId());
+
+        memberService.resetPassword(map);
+
+        return "redirect:/member/login";
     }
 }

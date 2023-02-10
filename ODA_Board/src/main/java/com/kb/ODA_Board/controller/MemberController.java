@@ -4,6 +4,7 @@ import com.kb.ODA_Board.model.MemberDTO;
 import com.kb.ODA_Board.service.MailServiceImpl;
 import com.kb.ODA_Board.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -82,7 +83,7 @@ public class MemberController {
         return "/member/memberModify";
     }
 
-    @PostMapping("/modifyProc/{id}")
+    @PutMapping("/modifyProc/{id}")
     public String memberModifyProc(@PathVariable("id") String id, MemberDTO memberDTO) {
         memberService.modifyMember(memberDTO);
 
@@ -106,11 +107,36 @@ public class MemberController {
             map.put("pw", passwordEncoder.encode(code));
             map.put("id", id);
 
-            memberService.resetPassword(map);
+            memberService.changePassword(map);
 
             return "success";
         }
 
         return "fail";
+    }
+
+    @GetMapping("/modifyPassword/{id}")
+    public String modifyPassword(@PathVariable("id") String id, Model model) {
+        model.addAttribute("id", id);
+
+        return "/member/passwordModify";
+    }
+
+    @ResponseBody
+    @PutMapping("/modifyPasswordProc/{id}")
+    public String modifyPasswordProc(@PathVariable("id") String id, String nowPassword, String newPassword) {
+        MemberDTO memberDTO = memberService.getMember(id);
+
+        if(!passwordEncoder.matches(nowPassword, memberDTO.getPw())) {
+            return "notMatch";
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("pw", passwordEncoder.encode(newPassword));
+
+        memberService.changePassword(map);
+
+        return "/member/detail/" + id;
     }
 }

@@ -10,5 +10,5 @@ public interface MemberService {
     int idCheck(String id);
     MemberDTO getMember(String id);
     void modifyMember(MemberDTO memberDTO);
-    void resetPassword(Map map);
+    void changePassword(Map map);
 }

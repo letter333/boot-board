@@ -48,8 +48,8 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
     }
 
     @Override
-    public void resetPassword(Map map) {
-        memberMapper.resetPassword(map);
+    public void changePassword(Map map) {
+        memberMapper.changePassword(map);
     }
 
 

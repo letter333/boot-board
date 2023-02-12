@@ -52,6 +52,11 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         memberMapper.changePassword(map);
     }
 
+    @Override
+    public void withdrawalMember(String id) {
+        memberMapper.withdrawalMember(id);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/main}">
 <head>
     <meta charset="UTF-8">
@@ -29,11 +30,34 @@
                 </div>
             </li>
         </ul>
-        <div class="d-flex flex-row-reverse mt-3">
+        <div th:if="${member.id} == ${#authentication.name}" class="d-flex flex-row-reverse mt-3">
             <a class="btn btn-outline-dark ms-1" th:href="@{/member/modify/{id}(id=${member.id})}">정보수정</a>
             <a class="btn btn-outline-dark ms-1" th:href="@{/member/modifyPassword/{id}(id=${member.id})}">비밀번호 변경</a>
-            <button class="btn btn-outline-danger">회원탈퇴</button>
+            <button class="btn btn-outline-danger" id="withdrawal-btn">회원탈퇴</button>
         </div>
     </div>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            $('#withdrawal-btn').on("click", function() {
+                let res = confirm("정말로 탈퇴하시겠습니까?")
+
+                if(res) {
+                    $.ajax({
+                        type: "delete",
+                        url: "/member/withdrawal/" + [[${member.id}]],
+                        success: function (data) {
+                            if(data === "success") {
+                                alert("회원탈퇴에 성공했습니다.")
+                                location.href = "/board/list"
+                            } else {
+                                alert("올바른 접근이 아닙니다.")
+                            }
+                        }
+                    })
+                }
+            })
+
+        </script>
+    </th:block>
 </body>
 </html>

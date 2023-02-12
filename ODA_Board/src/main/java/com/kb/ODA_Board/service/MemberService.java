@@ -11,4 +11,5 @@ public interface MemberService {
     MemberDTO getMember(String id);
     void modifyMember(MemberDTO memberDTO);
     void changePassword(Map map);
+    void withdrawalMember(String id);
 }

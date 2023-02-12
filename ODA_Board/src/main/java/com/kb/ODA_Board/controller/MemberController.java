@@ -4,6 +4,7 @@ import com.kb.ODA_Board.model.MemberDTO;
 import com.kb.ODA_Board.service.MailServiceImpl;
 import com.kb.ODA_Board.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,5 +140,20 @@ public class MemberController {
         memberService.changePassword(map);
 
         return "/member/detail/" + id;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/withdrawal/{id}")
+    public String withdrawalMember(@PathVariable("id") String id) {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if(id.equals(memberId)) {
+            memberService.withdrawalMember(id);
+            SecurityContextHolder.clearContext();
+
+            return "success";
+        } else {
+            return "fail";
+        }
     }
 }

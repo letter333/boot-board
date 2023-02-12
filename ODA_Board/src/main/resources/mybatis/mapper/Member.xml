@@ -28,5 +28,7 @@
         update member_info set pw = #{pw} where id = #{id};
     </update>
 
-
+    <delete id="withdrawalMember" parameterType="String">
+        delete from member_info where id = #{id};
+    </delete>
 </mapper>
